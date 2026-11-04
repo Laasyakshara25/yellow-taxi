@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT processing_status, record_count, error_message FROM nyc_taxi.bronze.ingestion_manifest",
+  "wait_timeout": "50s"
+}

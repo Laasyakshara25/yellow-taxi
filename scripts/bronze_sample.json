@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT COUNT(*) AS total, SUM(CASE WHEN tpep_pickup_datetime IS NULL THEN 1 ELSE 0 END) AS null_pickup, SUM(CASE WHEN pickup_location_id IS NULL THEN 1 ELSE 0 END) AS null_zone FROM nyc_taxi.bronze.yellow_taxi_trips",
+  "wait_timeout": "50s"
+}

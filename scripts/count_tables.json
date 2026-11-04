@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT 'yellow_trips' AS tbl, COUNT(*) AS cnt FROM nyc_taxi.bronze.yellow_taxi_trips UNION ALL SELECT 'silver_trips', COUNT(*) FROM nyc_taxi.silver.trips UNION ALL SELECT 'gold_hourly', COUNT(*) FROM nyc_taxi.gold.fact_pickups_hourly UNION ALL SELECT 'ml_training', COUNT(*) FROM nyc_taxi.gold.ml_training_features UNION ALL SELECT 'manifest', COUNT(*) FROM nyc_taxi.bronze.ingestion_manifest",
+  "wait_timeout": "50s"
+}

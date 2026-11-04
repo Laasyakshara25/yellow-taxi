@@ -1,0 +1,32 @@
+# NYC Taxi Data Platform — default configuration (override via env or job parameters)
+
+catalog: nyc_taxi
+schemas:
+  bronze: bronze
+  silver: silver
+  gold: gold
+
+# Unity Catalog volume base for raw TLC files (set in workspace / job params)
+volume_base: /Volumes/nyc_taxi/bronze/raw
+
+# Pipeline inputs — never hardcode a single month in code
+source_months:
+  - "2023-01"
+source_files: []
+
+# Time semantics
+local_timezone: America/New_York
+
+# Gold coverage: zero-fill only inside this inclusive range (ISO dates, NYC local)
+coverage_start_date: "2023-01-01"
+coverage_end_date: "2023-01-31"
+
+# Silver quality thresholds (overridable)
+quality:
+  max_trip_distance_miles: 500.0
+  min_fare_amount: -500.0
+  max_fare_amount: 10000.0
+
+# Feature engineering
+features:
+  warmup_hours: 168

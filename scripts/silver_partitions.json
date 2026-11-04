@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT source_month, COUNT(*) AS c FROM nyc_taxi.silver.trips GROUP BY source_month",
+  "wait_timeout": "50s"
+}

@@ -1,0 +1,8 @@
+{
+  "changes": [
+    {
+      "principal": "<ml-team-principal@example.com>",
+      "add": ["MANAGE", "USE_CATALOG", "USE_SCHEMA", "SELECT"]
+    }
+  ]
+}

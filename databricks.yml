@@ -1,0 +1,90 @@
+bundle:
+  name: nyc_taxi_data_platform
+
+variables:
+  catalog:
+    description: Unity Catalog name
+    default: nyc_taxi
+  bronze_schema:
+    default: bronze
+  silver_schema:
+    default: silver
+  gold_schema:
+    default: gold
+  source_months:
+    description: Comma-separated YYYY-MM months to ingest
+    default: "2023-01"
+  volume_base:
+    description: UC volume path for raw TLC files
+    default: /Volumes/nyc_taxi/bronze/raw
+  trip_parquet_path:
+    default: /Volumes/nyc_taxi/bronze/raw/yellow/yellow_tripdata_2023-01.parquet
+  zone_lookup_path:
+    default: /Volumes/nyc_taxi/bronze/raw/reference/taxi_zone_lookup.csv
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      profile: DEFAULT
+
+resources:
+  jobs:
+    nyc_taxi_pipeline:
+      name: nyc_taxi_pipeline_${bundle.target}
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+
+      tasks:
+        - task_key: init_catalog
+          environment_key: default
+          spark_python_task:
+            python_file: scripts/databricks_entry.py
+            parameters:
+              - --stage
+              - init_catalog
+        - task_key: ingest_zones
+          depends_on:
+            - task_key: init_catalog
+          environment_key: default
+          spark_python_task:
+            python_file: scripts/databricks_entry.py
+            parameters:
+              - --stage
+              - ingest_zones
+              - --source-path
+              - ${var.zone_lookup_path}
+        - task_key: process_trips
+          depends_on:
+            - task_key: ingest_zones
+          environment_key: default
+          spark_python_task:
+            python_file: scripts/databricks_entry.py
+            parameters:
+              - --stage
+              - process_file
+              - --source-path
+              - ${var.trip_parquet_path}
+        - task_key: backfill_silver_gold
+          depends_on:
+            - task_key: process_trips
+          environment_key: default
+          spark_python_task:
+            python_file: scripts/databricks_entry.py
+            parameters:
+              - --stage
+              - backfill_silver_gold
+              - --source-month
+              - 2023-01
+        - task_key: audit_ping
+          depends_on:
+            - task_key: backfill_silver_gold
+          environment_key: default
+          spark_python_task:
+            python_file: scripts/databricks_entry.py
+            parameters:
+              - --stage
+              - audit_ping

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nyc-taxi-data-platform"
+version = "0.1.0"
+description = "NYC Yellow Taxi medallion pipeline for Databricks (Bronze–Silver–Gold + ML features)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pyarrow>=14.0",
+    "pyspark>=3.5.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+nyc-taxi-stages = "nyc_taxi_data_platform.pipeline.stages:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]

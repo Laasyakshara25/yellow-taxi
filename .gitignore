@@ -1,0 +1,38 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local config and secrets
+.env
+.env.*
+.databrickscfg
+*.pem
+
+# Data and artifacts
+data/
+*.parquet
+*.csv
+!tests/fixtures/.gitkeep
+
+# Databricks bundle
+.databricks/
+bundle_deploy/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

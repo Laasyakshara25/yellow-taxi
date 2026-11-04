@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT SUM(CASE WHEN tpep_dropoff_datetime < tpep_pickup_datetime THEN 1 ELSE 0 END) AS bad_order, SUM(CASE WHEN trip_distance < 0 OR trip_distance > 500 THEN 1 ELSE 0 END) AS bad_distance, SUM(CASE WHEN fare_amount < -500 OR fare_amount > 10000 THEN 1 ELSE 0 END) AS bad_fare, SUM(CASE WHEN pickup_location_id <= 0 OR dropoff_location_id <= 0 THEN 1 ELSE 0 END) AS bad_zone FROM nyc_taxi.bronze.yellow_taxi_trips",
+  "wait_timeout": "50s"
+}

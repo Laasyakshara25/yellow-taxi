@@ -1,0 +1,5 @@
+{
+  "warehouse_id": "f03bea65be54b932",
+  "statement": "SELECT COUNT(*) AS quarantined FROM nyc_taxi.silver.quarantined_trips",
+  "wait_timeout": "50s"
+}
